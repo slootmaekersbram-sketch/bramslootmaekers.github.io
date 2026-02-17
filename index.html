@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --dark: #1a1a18;
+      --accent: #c8873a;
+      --muted: #7a7a72;
+      --card: #ffffff;
+      --border: #e0d9cc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%; right: -5%;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,135,58,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1.05;
+      max-width: 800px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero-bio {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--dark);
+      color: var(--cream);
+    }
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--dark);
+      border: 1.5px solid var(--dark);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      margin-bottom: 3rem;
+      line-height: 1.2;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 0 4rem;
+      max-width: calc(100% - 8rem);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-details { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .detail-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-row:last-child { border-bottom: none; }
+
+    .detail-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .detail-value { font-size: 0.95rem; font-weight: 400; }
+
+    /* ── CV SECTION ── */
+    .cv-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      transition: box-shadow 0.2s;
+    }
+    .cv-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+
+    .cv-card-left h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cv-card-left p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+
+    .pdf-icon {
+      width: 48px; height: 48px;
+      background: #fee2e2;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.09);
+      transform: translateY(-3px);
+    }
+
+    .project-header {
+      padding: 1.8rem 1.8rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .project-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      background: rgba(200,135,58,0.1);
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+    }
+
+    .project-body { padding: 1rem 1.8rem 1.8rem; }
+
+    .project-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .project-body p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-link {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--dark);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.2s;
+    }
+    .project-link:hover { color: var(--accent); }
+    .project-link::after { content: '→'; transition: transform 0.2s; }
+    .project-link:hover::after { transform: translateX(3px); }
+
+    /* ── CONTACT ── */
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: var(--dark);
+      font-size: 0.95rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-label  { animation: fadeUp 0.6s ease both; }
+    .hero h1     { animation: fadeUp 0.6s 0.1s ease both; }
+    .hero-bio    { animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-cta    { animation: fadeUp 0.6s 0.3s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .divider { margin: 0 1.5rem; max-width: calc(100% - 3rem); }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-name">Bram Slootmaekers</div><!-- ← REPLACED with your name -->
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#cv">CV</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-label">Portfolio</p>
+    <h1>Bram Slootmaekers<br /><span></span></h1><!-- ← REPLACE both -->
+    <p class="hero-bio">
+     Master Business Engineering student at KU Leuven, major in quantitative methods and minor in economics. Graduating summer 2026.
+
+      <!-- ← REPLACE this bio -->
+    </p>
+    <div class="hero-cta">
+      <a href="#cv" class="btn btn-primary">View My CV</a>
+      <a href="#projects" class="btn btn-outline">See Projects</a>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">A little more detail</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+           I am Bram, I am finishing my master degree in Business engineering at KU Leuven. I am expected to graduate in the summer of 2026 with a major in quantitative methods for decision making and a minor in economics (Summa cum laude with felicitations of the
+		exam commision). During my degree I attended a Waseda Graduate School of Commerce (Tokyo, Japan) for an exchange semester, I also attended the immersive technopreneurship summer school at XJTLU University (Suzhou, China).
+		On this site you can find my CV and projects, mainly related to data analysis and operations research.
+          <!-- ← REPLACED this paragraph -->
+        </p>
+        <p>
+
+          <!-- ←Optionally add a second paragraph about your goals, interests,
+          or the type of opportunities you're looking for.-->
+          <!-- ← REPLACED or DELETE this paragraph -->
+        </p>
+
+      </div>
+      <div class="about-details">
+        <div class="detail-row">
+          <span class="detail-label">Education</span>
+          <span class="detail-value"> Master Business Engineering, KU Leuven (expected 2026)<br>
+		Bachelor Business Engineering, KU Leuven (2024, Summa Cum Laude)
+	<!-- ← REPLACED --></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Location</span>
+          <span class="detail-value"> Leuven, Belgium<!-- ← REPLACED --></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Interests</span>
+          <span class="detail-value"> Management, Production and Logistics, Operations Research, Data Analysis, Football, Running, Fitness<!-- ← REPLACED --></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CV -->
+  <section id="cv">
+    <p class="section-label">Curriculum Vitae</p>
+    <h2 class="section-title">My CV</h2>
+
+    <div class="cv-card">
+      <div class="pdf-icon">📄</div>
+      <div class="cv-card-left">
+        <h3>Full Curriculum Vitae</h3>
+        <p>Download my complete CV including education, experience, and skills.</p>
+      </div>
+      <!-- 
+        HOW TO LINK YOUR CV PDF:
+        1. Put your CV file (e.g. "my-cv.pdf") in the same folder as this HTML file
+        2. Change href="YOUR-CV-FILE.pdf" below to match your filename
+        3. Done!
+      -->
+      <a href="CV_Slootmaekers_Bram.pdf" class="btn btn-primary" download>Download CV ↓</a>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Work & Projects</p>
+    <h2 class="section-title">Things I've made</h2>
+
+    <div class="projects-grid">
+
+      <!-- PROJECT CARD 1 — with PDF -->
+      <!--
+        HOW TO LINK A PROJECT PDF:
+        Put the PDF in the same folder as this HTML file,
+        then change href="YOUR-PROJECT-FILE.pdf" to your filename.
+      -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-tag">Research</span><!-- ← REPLACED tag -->
+        </div>
+        <div class="project-body">
+          <h3>Has the relationship between the oil market and the US economy changed_ A local projection approach</h3><!-- ← REPLACE -->
+          <p>This research studies whether the macroeconomic effects of oil market
+  	    shocks on the economy in the United States have changed over time. The research builds on earlier works that used Structural Vector Autoregressive models to identify structural shocks. The obtained shocks are to find 
+		impulse response functions using local projection methods.
+</p><!-- ← REPLACED -->
+          <a href="Has the relationship between the oil market and the US economy changed_ A local projection approach.pdf" class="project-link" target="_blank">View PDF</a>
+        </div>
+      </div>
+
+      <!-- PROJECT CARD 2 — with PDF -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-tag">Research</span><!-- ← REPLACE tag -->
+        </div>
+        <div class="project-body">
+          <h3>Using Regression Discontinuity to investigate the Incumbency Advantage in US House of Representatives elections</h3><!-- ← REPLACE -->
+          <p>This research uses regression discontinuity to estimate the causal effect of incumbency status on electoral succes in subsequent elections for the US House of Representatives elections.</p><!-- ← REPLACE -->
+          <a href="Using Regression Discontinuity to investigate the Incumbency Advantage in US House of Representatives elections.pdf" class="project-link" target="_blank">View PDF</a>
+        </div>
+      </div>
+
+
+      <!--
+        TO ADD MORE PROJECTS: Copy one of the project cards above
+        (from <div class="project-card"> to its closing </div>)
+        and paste it here, then update the content.
+      -->
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Get in Touch</p>
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-inner">
+      <div class="contact-text">
+        <p>
+          Feel free to reach out if you'd like to discuss work,
+          collaborations, or just want to say hello.
+          <!-- ← REPLACE or keep this -->
+        </p>
+        <div class="contact-links">
+          <a href="slootmaekers.bram@gmail.com" class="contact-link"><!-- ← REPLACE email -->
+            <span class="contact-icon">✉</span>
+            slootmaekers.bram@gmail.com
+          </a>
+          <a href="www.linkedin.com/in/bram-slootmaekers-98469335b" class="contact-link" target="_blank"><!-- ← REPLACE URL -->
+            <span class="contact-icon">in</span>
+            LinkedIn
+          </a>
+          <!-- Add or remove links as needed -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© <span id="year"></span> Bram Slootmaekers</span><!-- ← REPLACE name -->
+    <span>Built with HTML</span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
